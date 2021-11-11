@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState }  from "react";
-import {ScrollView, Text, StyleSheet, Image, View} from "react-native";
+import {ScrollView, Text, StyleSheet, Image, View, TouchableOpacity} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addName } from "../store/actions/main.actions";
 import CardView from "react-native-cardview";
 
 const Home = (props: any) => {
+const {navigation} = props;
 const [homeA, setHomeA] = useState(null);
 const [categories, setCategories] = useState([]);
 React.useEffect(() => {
@@ -21,7 +22,9 @@ React.useEffect(() => {
 }, []);
 
 
-
+ const handleStartQuiz = React.useCallback((category) => {
+  navigation.navigate('Child', { categoryName: category.label, categoryValue: category.value });
+ },[]);
 
 
 return (
@@ -37,15 +40,14 @@ return (
             <Text style={{fontSize: 19, paddingTop:25,paddingLeft:25 }}>View your Scoreboard</Text>
             <Text style={{fontSize: 12, color:"#8B80B6" , paddingLeft: 25,paddingBottom: 20}}>Click to view your quiz history</Text>
             </CardView></View>
-      <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Recent Quiz</Text>
+      <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Select Quiz to Take</Text>
       <View style={{padding:10}}>
-      {categories.map((cat: any) => <View style={{marginTop: 25}}><CardView
-          key={cat.value}
+      {categories.map((cat: any) => <TouchableOpacity  key={cat.value} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView
           cardElevation={8}
           cardMaxElevation={10}
-          
           cornerRadius={8}>
            <View
+           
             style={{
               flexDirection: "row",
               height: 100,
@@ -61,12 +63,12 @@ return (
       />
             </View>
             <View style={{ flex: 0.7 }} >
-            <Text style={{fontSize: 17}}>{cat.label}</Text>
-            <Text style={{color:"#8B80B6"}}>10 Questions</Text>
+            <Text  style={{fontSize: 17}}>{cat.label}</Text>
+            <Text  style={{color:"#8B80B6"}}>10 Questions</Text>
               </View>
             
           </View>
-</CardView></View>)}
+</CardView></TouchableOpacity>)}
 </View>
       
     </ScrollView>
