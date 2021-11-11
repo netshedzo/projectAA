@@ -39,7 +39,7 @@ React.useEffect(() => {
 
 function shuffleQuestions(array: string[], currentAnswer: string) {
   if(!currentAnswer){return []};
-  console.log('correct Answer', currentAnswer);
+  console.log('see correct Answer for testing', currentAnswer);
   
   array = array.slice(0,3).concat([currentAnswer]);
   let currentIndex = array.length,  randomIndex;
@@ -60,7 +60,7 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
       correct: category === currentQuestion.correctAnswer ? true: false
     }
     setSavedAnswers(answers => { answers.push(answer); return answers});
-    if(answer.correst){
+    if(answer.correct){
       setCurrentScore(score => { score += 1; return score});
     }
     if(index !== 9){
@@ -78,14 +78,14 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
       setCompleted(true);
       Alert.alert(
         "You Scored "+currentScore+"/10 !",
-        "Quiz automatically redirected to the main page in 2 minutes",
+        "Quiz will automatically redirect to the main page in 1 minute",
         [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
       );
       setTimeout(() => {
         navigation.navigate('Home');
-      }, 2000)
+      }, 60000)
     }
 
  },[index, currentQuestion, currentScore, savedAnswers, allQuestions]);

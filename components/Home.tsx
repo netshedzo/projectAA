@@ -31,7 +31,7 @@ return (
     <ScrollView style={styles.background} >
       <View style={styles.mainView}> 
        <Text  style={styles.medFont}>Welcome Back!</Text>
-       <Text  style={styles.smallFont}>The best quiz site out there</Text>
+       <Text  style={styles.smallFont}>The best mobile quiz app out there</Text>
       </View>
       <View style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
           cardElevation={3}
