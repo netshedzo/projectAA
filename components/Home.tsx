@@ -30,7 +30,13 @@ return (
        <Text  style={styles.medFont}>Welcome Back!</Text>
        <Text  style={styles.smallFont}>The best quiz site out there</Text>
       </View>
-
+      <View style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
+          cardElevation={3}
+          cardMaxElevation={10}
+          cornerRadius={4}>
+            <Text style={{fontSize: 19, paddingTop:25,paddingLeft:25 }}>View your Scoreboard</Text>
+            <Text style={{fontSize: 12, color:"#8B80B6" , paddingLeft: 25,paddingBottom: 20}}>Click to view your quiz history</Text>
+            </CardView></View>
       <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Recent Quiz</Text>
       <View style={{padding:10}}>
       {categories.map((cat: any) => <View style={{marginTop: 25}}><CardView
@@ -55,7 +61,7 @@ return (
       />
             </View>
             <View style={{ flex: 0.7 }} >
-            <Text style={{fontSize: 16}}>{cat.label}</Text>
+            <Text style={{fontSize: 17}}>{cat.label}</Text>
             <Text style={{color:"#8B80B6"}}>10 Questions</Text>
               </View>
             
@@ -77,8 +83,8 @@ const styles = StyleSheet.create({
       width: "100%",
       paddingTop: 40,
       paddingLeft:10,
-      borderBottomLeftRadius: 40,
-      borderBottomRightRadius: 40
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
 
     },
     smallFont: {
