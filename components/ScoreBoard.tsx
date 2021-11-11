@@ -5,16 +5,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addScore } from "../store/actions/main.actions";
 import CardView from "react-native-cardview";
-import { useSelector } from 'react-redux';
 
 const Home = (props: any) => {
 const {navigation} = props;
 const [homeA, setHomeA] = useState(null);
 const [categories, setCategories] = useState([]);
-const mainStore: any = useSelector(state => state);
-
 React.useEffect(() => {
- console.log('came to hooks',mainStore["main"]["scores"]);
+ console.log('came to hooks')
   axios.get('https://api.trivia.willfry.co.uk/categories')
   .then(res => {
     setCategories(res.data);   

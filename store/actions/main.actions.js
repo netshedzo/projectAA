@@ -1,8 +1,8 @@
-export const ADD_NAME = "[MAIN APP] ADD NAME";
+export const ADD_SCORE = "[MAIN APP] ADD SCORE";
 
-export const addName = (name) => {
+export const addScore = (score) => {
 return {
-    type: ADD_NAME,
-    payload: name,
+    type: ADD_SCORE,
+    payload: score,
 }
 };

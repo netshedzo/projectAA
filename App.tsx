@@ -24,11 +24,13 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import { createStore } from 'redux';
+
 import Home from './components/Home';
 import Child from './components/Child';
-import reduxStore from "./store/index";
+import {store, persistor} from "./store/index";
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
 
 
 const App = () => {
@@ -38,16 +40,17 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const store = createStore(reduxStore);
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
    <NavigationContainer>
      <Stack.Navigator initialRouteName="Home" >
-     <Stack.Screen  options={{headerShown: false, statusBarStyle: "light"}}  name="Home" component={Home} />
-     <Stack.Screen options={{headerShown: false, statusBarStyle: "light"}} name="Child" component={Child} />
+     <Stack.Screen  options={{headerShown: false,statusBarStyle: "light"}}  name="Home" component={Home} />
+     <Stack.Screen options={{headerShown: false,statusBarStyle: "light"}} name="Child" component={Child} />
      </Stack.Navigator>
    </NavigationContainer>
+   </PersistGate>
    </Provider>
   );
 };

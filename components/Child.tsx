@@ -3,8 +3,9 @@ import React, { useState }  from "react";
 import {ScrollView, Text, StyleSheet, Image, View, TouchableOpacity, Alert} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { addName } from "../store/actions/main.actions";
+import { addScore } from "../store/actions/main.actions";
 import CardView from "react-native-cardview";
+import {useDispatch} from "react-redux";
 
 const Child = (props: any) => {
 const {navigation, route} = props;
@@ -12,6 +13,7 @@ const [homeA, setHomeA] = useState(null);
  const params = route.params;
 const [questions, setQuestions] = useState([]);
 const [index, setIndex] = useState(0);
+const dispatch = useDispatch();
 const [currentQuestion, setCurrentQuestion] = useState({
   question: '',
   correctAnswer:'',
@@ -85,6 +87,11 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
       );
+      dispatch(addScore({
+        title: params.categoryName,
+        date: (new Date()).toISOString(),
+        score: score
+      }))
       setTimeout(() => {
         navigation.navigate('Home');
       }, 30000)
@@ -212,7 +219,7 @@ const mapStateToProps = (state: any) => {
 
   const mapDispatchToProps = (dispatch: any) => (
     bindActionCreators({
-      addName,
+      addScore,
     }, dispatch)
   );
   

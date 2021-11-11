@@ -1,18 +1,17 @@
 import '../actions/main.actions';
-import { ADD_NAME } from '../actions/main.actions';
+import { ADD_SCORE } from '../actions/main.actions';
 
 const initialState = {
-    page: '',
-    name: "",
+    scores: []
 }
 
 const mainReducer = (state = initialState, action) => {
 
     switch(action.type) {
-        case ADD_NAME: 
+        case ADD_SCORE: 
         return {
             ...state,
-            name: action.payload
+            scores: state.scores.concat([action.payload])
         }
         default: 
         return state;
