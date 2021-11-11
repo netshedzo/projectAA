@@ -60,8 +60,10 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
       correct: category === currentQuestion.correctAnswer ? true: false
     }
     setSavedAnswers(answers => { answers.push(answer); return answers});
+    let score = currentScore;
     if(answer.correct){
-      setCurrentScore(score => { score += 1; return score});
+       score = score + 1;
+       setCurrentScore(score);
     }
     if(index !== 9){
      const newIndex = index + 1;
@@ -77,15 +79,15 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
       });
       setCompleted(true);
       Alert.alert(
-        "You Scored "+currentScore+"/10 !",
-        "Quiz will automatically redirect to the main page in 1 minute",
+        "You Scored "+score+"/10 !",
+        "Quiz will automatically redirect to the main page in 30 seconds",
         [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
       );
       setTimeout(() => {
         navigation.navigate('Home');
-      }, 60000)
+      }, 30000)
     }
 
  },[index, currentQuestion, currentScore, savedAnswers, allQuestions]);
@@ -144,7 +146,7 @@ return (
    
     style={{
       flexDirection: "row",
-      height: 80,
+      height: 90,
       padding: 6
     }}
   >
