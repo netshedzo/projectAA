@@ -44,8 +44,8 @@ const App = () => {
     <Provider store={store}>
    <NavigationContainer>
      <Stack.Navigator initialRouteName="Home" >
-     <Stack.Screen name="Home" component={Home} />
-     <Stack.Screen name="Child" component={Child} />
+     <Stack.Screen  options={{headerShown: false,statusBarStyle: "light"}}  name="Home" component={Home} />
+     <Stack.Screen options={{headerShown: false,statusBarStyle: "light"}} name="Child" component={Child} />
      </Stack.Navigator>
    </NavigationContainer>
    </Provider>
