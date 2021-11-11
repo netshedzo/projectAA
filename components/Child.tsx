@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState }  from "react";
-import {ScrollView, Text, StyleSheet, Image, View, TouchableOpacity} from "react-native";
+import {ScrollView, Text, StyleSheet, Image, View, TouchableOpacity, Alert} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addName } from "../store/actions/main.actions";
@@ -38,7 +38,8 @@ React.useEffect(() => {
 }, []);
 
 function shuffleQuestions(array: string[], currentAnswer: string) {
-  console.log('correct ANswer', currentAnswer);
+  if(!currentAnswer){return []};
+  console.log('correct Answer', currentAnswer);
   
   array = array.slice(0,3).concat([currentAnswer]);
   let currentIndex = array.length,  randomIndex;
@@ -65,7 +66,7 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
     if(index !== 9){
      const newIndex = index + 1;
      setIndex(newIndex);
-     setCurrentQuestion(allQuestions[index]);
+     setCurrentQuestion(allQuestions[newIndex]);
     }else{
       setCurrentQuestion({
         question: 'Quiz Complete',
@@ -75,6 +76,16 @@ function shuffleQuestions(array: string[], currentAnswer: string) {
         type: ''
       });
       setCompleted(true);
+      Alert.alert(
+        "You Scored "+currentScore+"/10 !",
+        "Quiz automatically redirected to the main page in 2 minutes",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 2000)
     }
 
  },[index, currentQuestion, currentScore, savedAnswers, allQuestions]);
@@ -124,7 +135,7 @@ return (
           </View>
 </CardView></TouchableOpacity>)}
 
-{completed && savedAnswers.map((cat: any, index: number) => <TouchableOpacity  key={cat.question+index} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView
+{completed && savedAnswers.map((cat: any, index: number) => <TouchableOpacity  key={cat.question+index}   style={{marginTop: 25}}><CardView
   
   cardElevation={8}
   cardMaxElevation={10}
@@ -147,7 +158,7 @@ source={{
     </View>
     <View style={{ flex: 0.7 }} >
     <Text  style={{fontSize: 15}}>{cat.question}</Text>
-    <Text  style={{fontSize: 10, color: cat.correct ? 'green': 'red'}}>{cat.correct ? 'Correct': 'Incorrect'}</Text>
+    <Text  style={{fontSize: 10 , fontWeight:'bold', color: cat.correct ? 'green': 'red'}}>{cat.correct ? 'Correct': 'Incorrect'}</Text>
       </View>
     
   </View>
