@@ -27,6 +27,7 @@ import {
 
 import Home from './components/Home';
 import Child from './components/Child';
+import ScoreBoard from './components/ScoreBoard';
 import {store, persistor} from "./store/index";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -48,6 +49,7 @@ const App = () => {
      <Stack.Navigator initialRouteName="Home" >
      <Stack.Screen  options={{headerShown: false,statusBarStyle: "light"}}  name="Home" component={Home} />
      <Stack.Screen options={{headerShown: false,statusBarStyle: "light"}} name="Child" component={Child} />
+     <Stack.Screen options={{headerShown: false,statusBarStyle: "light"}} name="ScoreBoard" component={ScoreBoard} />
      </Stack.Navigator>
    </NavigationContainer>
    </PersistGate>

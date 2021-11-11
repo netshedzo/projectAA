@@ -5,16 +5,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addScore } from "../store/actions/main.actions";
 import CardView from "react-native-cardview";
-import { useSelector } from 'react-redux';
+
 
 const Home = (props: any) => {
 const {navigation} = props;
 const [homeA, setHomeA] = useState(null);
 const [categories, setCategories] = useState([]);
-const mainStore: any = useSelector(state => state);
+
 
 React.useEffect(() => {
- console.log('came to hooks',mainStore["main"]["scores"]);
   axios.get('https://api.trivia.willfry.co.uk/categories')
   .then(res => {
     setCategories(res.data);   
@@ -28,6 +27,9 @@ React.useEffect(() => {
  const handleStartQuiz = React.useCallback((category) => {
   navigation.navigate('Child', { categoryName: category.label, categoryValue: category.value });
  },[]);
+ const goToScoreboard = React.useCallback(() => {
+  navigation.navigate('ScoreBoard');
+ },[]);
 
 
 return (
@@ -36,13 +38,13 @@ return (
        <Text  style={styles.medFont}>Welcome Back!</Text>
        <Text  style={styles.smallFont}>The best mobile quiz app out there</Text>
       </View>
-      <View style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
+      <TouchableOpacity onPress={() => goToScoreboard()} style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
           cardElevation={3}
           cardMaxElevation={10}
           cornerRadius={4}>
             <Text style={{fontSize: 19, paddingTop:25,paddingLeft:25 }}>View your Scoreboard</Text>
             <Text style={{fontSize: 12, color:"#8B80B6" , paddingLeft: 25,paddingBottom: 20}}>Click to view your quiz history</Text>
-            </CardView></View>
+            </CardView></TouchableOpacity>
       <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Select Quiz to Take</Text>
       <View style={{padding:10}}>
       {categories.map((cat: any) => <TouchableOpacity  key={cat.value} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView

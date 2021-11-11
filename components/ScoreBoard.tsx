@@ -5,11 +5,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addScore } from "../store/actions/main.actions";
 import CardView from "react-native-cardview";
+import { useSelector } from 'react-redux';
 
-const Home = (props: any) => {
+
+const ScoreBoard = (props: any) => {
 const {navigation} = props;
 const [homeA, setHomeA] = useState(null);
 const [categories, setCategories] = useState([]);
+const mainStore: any = useSelector(state => state);
+const scores: any[]  = mainStore["main"]["scores"];
 React.useEffect(() => {
  console.log('came to hooks')
   axios.get('https://api.trivia.willfry.co.uk/categories')
@@ -25,24 +29,27 @@ React.useEffect(() => {
  const handleStartQuiz = React.useCallback((category) => {
   navigation.navigate('Child', { categoryName: category.label, categoryValue: category.value });
  },[]);
+ const goToHome = React.useCallback(() => {
+  navigation.navigate('Home');
+ },[]);
 
 
 return (
     <ScrollView style={styles.background} >
       <View style={styles.mainView}> 
-       <Text  style={styles.medFont}>Welcome Back!</Text>
-       <Text  style={styles.smallFont}>The best mobile quiz app out there</Text>
+      <Text  style={styles.medFont}>Scoreboard</Text>
+       <Text  style={styles.smallFont}>All your quiz history in one place</Text>
       </View>
-      <View style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
+      <TouchableOpacity onPress={() => {goToHome()}} style={{marginTop: -30, paddingLeft: 20, paddingRight:20}}><CardView
           cardElevation={3}
           cardMaxElevation={10}
           cornerRadius={4}>
-            <Text style={{fontSize: 19, paddingTop:25,paddingLeft:25 }}>View your Scoreboard</Text>
-            <Text style={{fontSize: 12, color:"#8B80B6" , paddingLeft: 25,paddingBottom: 20}}>Click to view your quiz history</Text>
-            </CardView></View>
-      <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Select Quiz to Take</Text>
+            <Text style={{fontSize: 19, paddingTop:25,paddingLeft:25 }}>Go Back Home</Text>
+            <Text style={{fontSize: 12, color:"#8B80B6" , paddingLeft: 25,paddingBottom: 20}}>Click to go back</Text>
+            </CardView></TouchableOpacity>
+      <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Quiz History</Text>
       <View style={{padding:10}}>
-      {categories.map((cat: any) => <TouchableOpacity  key={cat.value} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView
+      {scores.map((cat: any) => <TouchableOpacity  key={cat.value} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView
           cardElevation={8}
           cardMaxElevation={10}
           cornerRadius={8}>
@@ -58,13 +65,14 @@ return (
             <Image
         style={styles.logo}
         source={{
-          uri: `https://ui-avatars.com/api/?name=${cat.label}&background=random`,
+          uri: `https://ui-avatars.com/api/?name=${cat.title}&background=random`,
         }}
       />
             </View>
             <View style={{ flex: 0.7 }} >
-            <Text  style={{fontSize: 17}}>{cat.label}</Text>
-            <Text  style={{color:"#8B80B6"}}>10 Questions</Text>
+            <Text  style={{fontSize: 18}}>{cat.title} Quiz</Text>
+            <Text  style={{color:"#8B80B6", fontSize: 17}}>Score {cat.score}/10 </Text>
+            <Text  style={{fontSize: 12}}>Date: {cat.date} </Text>
               </View>
             
           </View>
@@ -121,5 +129,5 @@ const mapStateToProps = (state: any) => {
   );
   
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps,mapDispatchToProps)(ScoreBoard);
 
