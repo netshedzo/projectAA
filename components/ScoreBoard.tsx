@@ -26,9 +26,6 @@ React.useEffect(() => {
 }, []);
 
 
- const handleStartQuiz = React.useCallback((category) => {
-  navigation.navigate('Child', { categoryName: category.label, categoryValue: category.value });
- },[]);
  const goToHome = React.useCallback(() => {
   navigation.navigate('Home');
  },[]);
