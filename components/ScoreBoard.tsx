@@ -49,7 +49,7 @@ return (
             </CardView></TouchableOpacity>
       <Text  style={{color: "black", fontSize: 17,fontWeight: 'bold',marginTop: 15, paddingLeft:10,  }}>Quiz History</Text>
       <View style={{padding:10}}>
-      {scores.map((cat: any) => <TouchableOpacity  key={cat.value} onPress={() => handleStartQuiz(cat)}   style={{marginTop: 25}}><CardView
+      {scores.map((cat: any) => <TouchableOpacity  key={cat.date}    style={{marginTop: 25}}><CardView
           cardElevation={8}
           cardMaxElevation={10}
           cornerRadius={8}>
